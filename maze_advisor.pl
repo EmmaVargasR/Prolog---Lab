@@ -39,3 +39,4 @@ track_path(Path) :-
 % predicate why
 why(X, Y) :- reason(X, Y, Explanation),
     format('Reasoning from ~w to ~w: ~w~n', [X, Y, Explanation]).
+
