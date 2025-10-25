@@ -31,8 +31,8 @@ find_path(X, Y, Path) :-
 
 % tracking numbers of steps and visited nodes
 track_path(Path) :- 
-    length(Path, l),
-    Steps is l-1, 
+    length(Path, L),
+    Steps is L-1, 
     format('Steps count: ~w~n', [Steps]),
     format('Visited nodes:~w~n ', [Path]). 
 
