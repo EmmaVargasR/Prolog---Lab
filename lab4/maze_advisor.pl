@@ -6,7 +6,6 @@ edge(c, b).
 edge(b, d).
 edge(d, exit).
 blocked(a, c).  
-blocked(c, a).
 
 can_move(X, Y) :- edge(X, Y), \+ blocked(X, Y).
 reason(X, Y, 'path is open') :- can_move(X, Y).
