@@ -1,0 +1,76 @@
+:- use_module(library(clpfd)).
+
+regions_au([wa, nt, sa, q, nsw, v, t]).
+
+edges_au([
+    wa-nt, wa-sa, nt-sa, nt-q, sa-q,
+    sa-nsw, sa-v, q-nsw, nsw-v
+]).
+regions_sa([gf, sr, gy, ve, co, ec, pe, bo, py, cl, ar, uy, br]).
+edges_sa([
+    ar-bo, ar-cl, ar-py, ar-uy,
+    bo-br, bo-cl, bo-pe, bo-py,
+    br-co, br-gy, br-pe, br-py, br-sr, br-uy, br-ve, br-gf,
+    cl-pe,
+    co-ec, co-pe, co-ve,
+    ec-pe,
+    gy-sr, gy-gf,
+    gf-sr,
+    py-uy,
+    ve-sr
+]).
+
+color_names([1-red, 2-green, 3-blue, 4-yellow]).
+
+map_color(Regions, Edges, K, Vars):-
+    same_length(Regions, Vars),  
+    Vars ins 1..K,     
+    apply_edges(Regions, Vars, Edges), 
+    labeling([ffc], Vars).
+
+apply_edges(_, _, []).
+apply_edges(Regions, Vars, [A-B | Rest]) :-
+    region_color(A, Regions, Vars, ColorA),
+    region_color(B, Regions, Vars, ColorB),
+    ColorA #\= ColorB,
+    apply_edges(Regions, Vars, Rest).
+
+region_color(Region, [Region|_], [Color|_], Color).
+region_color(Region, [_|RestRegions], [_|RestVars], Color) :-
+    region_color(Region, RestRegions, RestVars, Color).
+
+%intenta con k=1 hasta kmax y para en la primera que funcione
+min_colors(Regions, Edges, MaxK, MinK, Vars) :-
+    between(1, MaxK, K),              
+    map_color(Regions, Edges, K, Vars),
+    MinK = K,                        
+    !.                                
+
+min_colors_au(MaxK, MinK, Vars) :-
+    regions_au(Rs),
+    edges_au(Es),
+    min_colors(Rs, Es, MaxK, MinK, Vars).
+
+min_colors_sa(MaxK, MinK, Vars) :-
+    regions_sa(Rs),
+    edges_sa(Es),
+    min_colors(Rs, Es, MaxK, MinK, Vars).
+
+pretty_color_by_region([], []).
+pretty_color_by_region([R|Rs], [C|Cs]) :-
+    color_names(Names),
+    member(C-Name, Names),
+    format('~w = ~w~n', [R, Name]),
+    pretty_color_by_region(Rs, Cs).
+    
+run_au(MaxK) :-
+    min_colors_au(MaxK, MinK, Vars),
+    format('Minimum colors for Australia = ~w~n', [MinK]),
+    regions_au(Rs),
+    pretty_color_by_region(Rs, Vars).
+
+run_sa(MaxK) :-
+    min_colors_sa(MaxK, MinK, Vars),
+    format('Minimum colors for South America = ~w~n', [MinK]),
+    regions_sa(Rs),
+    pretty_color_by_region(Rs, Vars).
