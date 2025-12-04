@@ -1,0 +1,17 @@
+4 ?- consult('semantic.pl').
+true.
+
+5 ?- phrase(sentence(S), [the, angry, girl, sees, the, dog]).
+S = see(entity(girl, [angry]), entity(dog, [])) .
+
+6 ?- phrase(sentence(S), [a, big, dog, eats, the, small, bird]).
+S = eat(entity(dog, [big]), entity(bird, [small])) .
+
+7 ?- phrase(sentence(S), [a, kid, sees, the, big, cat]).
+S = see(entity(kid, []), entity(cat, [big])) .
+
+8 ?- phrase(sentence(S), [a, big, cat, loves, the, angry, kid]).
+S = love(entity(cat, [big]), entity(kid, [angry])) .
+
+9 ?- phrase(sentence(S), [a, big, angry, bird, eats, the, small, fish]).  
+S = eat(entity(bird, [big, angry]), entity(fish, [small])) .
