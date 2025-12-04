@@ -1,0 +1,21 @@
+1 ?- consult('semantic.pl').
+true.
+
+2 ?- phrase(sentence(S), [a, dog, eats, the, bird]).
+S = eat(dog, bird) .
+
+3 ?- phrase(sentence(S), [the, girl, sees, the, dog]).
+S = see(girl, dog) .
+
+4 ?- phrase(sentence(S), [a, kid, sees, the, cat]).
+S = see(kid, cat) .
+
+5 ?- phrase(sentence(S), [the, dog, loves, the, girl]).
+S = love(dog, girl) .
+
+6 ?- phrase(sentence(S), [a, angry, bird, eats, the, fish]).
+S = eat(bird, fish) .
+
+7 ?- phrase(sentence(S), [the, small, girl, loves, the, big, kid]).
+S = love(girl, kid) .
+
