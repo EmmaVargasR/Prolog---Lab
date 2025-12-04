@@ -1,4 +1,4 @@
-1 ?- consult('semantic.pl').
+1 ?- consult('syntax.pl').
 true.
 
 2 ?- phrase(sentence(S), [a, dog, eats, the, bird]).
